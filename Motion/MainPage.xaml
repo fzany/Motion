@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:viewmodel="clr-namespace:Motion.ViewModel" xmlns:helper="clr-namespace:Motion.Helpers"
+             x:Class="Motion.MainPage">
+    <ContentPage.BindingContext>
+        <viewmodel:MainViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <helper:IntEnumConverter x:Key="IntEnum"/>
+            <helper:IntDoubleConverter x:Key="IntDouble"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <StackLayout>
+        <Frame BackgroundColor="#2196F3" Padding="24" CornerRadius="0">
+            <Label Text="Motion" HorizontalTextAlignment="Center" TextColor="White" FontSize="36"/>
+        </Frame>
+        <Grid Margin="20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition  Width="*"/>
+                <ColumnDefinition  Width="*"/>
+                <ColumnDefinition  Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Label Text="X" Grid.Row="0" Grid.Column="0" FontSize="16" HorizontalOptions="CenterAndExpand"/>
+            <Label Text="Y" Grid.Row="0" Grid.Column="1" FontSize="16" HorizontalOptions="CenterAndExpand"/>
+            <Label Text="Z" Grid.Row="0" Grid.Column="2" FontSize="16" HorizontalOptions="CenterAndExpand"/>
+            <Label Text="~" Grid.Row="0" Grid.Column="3" FontSize="16" HorizontalOptions="CenterAndExpand"/>
+
+            <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" Margin="0,20,0,10" HorizontalOptions="CenterAndExpand" Text="Magnetometer" FontSize="Title"/>
+            <Label Text="{Binding Magneto.X}" Grid.Row="2" Grid.Column="0" FontSize="16" HorizontalOptions="CenterAndExpand"/>
+            <Label Text="{Binding Magneto.Y}" Grid.Row="2" Grid.Column="1" FontSize="16" HorizontalOptions="CenterAndExpand"/>
+            <Label Text="{Binding Magneto.Z}" Grid.Row="2" Grid.Column="2" FontSize="16" HorizontalOptions="CenterAndExpand"/>
+            <Label Text="{Binding Magneto.Translate}" Grid.Row="2" Grid.Column="3" FontSize="16" HorizontalOptions="CenterAndExpand"/>
+
+            <Grid Margin="0,10" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4">
+                <Label Grid.Column="0" FontSize="16" HorizontalOptions="CenterAndExpand" VerticalOptions="Center">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <FormattedString.Spans>
+                                <Span Text="Low ~: "/>
+                                <Span Text="{Binding LowMagneto}"/>
+                            </FormattedString.Spans>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+                <Label Grid.Column="1" FontSize="16" HorizontalOptions="CenterAndExpand" VerticalOptions="Center">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <FormattedString.Spans>
+                                <Span Text="High ~: "/>
+                                <Span Text="{Binding HighMagneto}"/>
+                            </FormattedString.Spans>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+
+                <Picker Grid.Column="2" ItemsSource="{Binding MagentoMethods}" SelectedIndex="{Binding CurrentMagnetoMethodType, Converter={StaticResource IntEnum}}" TextColor="White" TitleColor="White" Title="Method" VerticalOptions="CenterAndExpand"/>
+            </Grid>
+
+            <Label Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="4" Margin="0,20,0,10" HorizontalOptions="CenterAndExpand" Text="Accelerometer" FontSize="Title"/>
+            <Label Text="{Binding Accelero.X}" Grid.Row="5" Grid.Column="0" FontSize="16" HorizontalOptions="CenterAndExpand"/>
+            <Label Text="{Binding Accelero.Y}" Grid.Row="5" Grid.Column="1" FontSize="16" HorizontalOptions="CenterAndExpand"/>
+            <Label Text="{Binding Accelero.Z}" Grid.Row="5" Grid.Column="2" FontSize="16" HorizontalOptions="CenterAndExpand"/>
+            <Label Text="{Binding Accelero.Translate}" Grid.Row="5" Grid.Column="3" FontSize="16" HorizontalOptions="CenterAndExpand"/>
+
+
+            <Label Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="4" Margin="0,20,0,10" HorizontalOptions="CenterAndExpand" Text="Gyroscope" FontSize="Title"/>
+            <Label Text="{Binding Gyro.X}" Grid.Row="7" Grid.Column="0" FontSize="16" HorizontalOptions="CenterAndExpand"/>
+            <Label Text="{Binding Gyro.Y}" Grid.Row="7" Grid.Column="1" FontSize="16" HorizontalOptions="CenterAndExpand"/>
+            <Label Text="{Binding Gyro.Z}" Grid.Row="7" Grid.Column="2" FontSize="16" HorizontalOptions="CenterAndExpand"/>
+            <Label Text="{Binding Gyro.Translate}" Grid.Row="7" Grid.Column="3" FontSize="16" HorizontalOptions="CenterAndExpand"/>
+
+        </Grid>
+
+        <StackLayout Orientation="Horizontal">
+            <Stepper Minimum="0" Maximum="5" Value="{Binding DecimaPoint, Mode=TwoWay, Converter={StaticResource IntDouble}}" Increment="1" HorizontalOptions="CenterAndExpand"/>
+            <Label Grid.Column="1" FontSize="16" HorizontalOptions="CenterAndExpand" VerticalOptions="Center">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <FormattedString.Spans>
+                            <Span Text="{Binding DecimaPoint}"/>
+                            <Span Text=" DP"/>
+                        </FormattedString.Spans>
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+        </StackLayout>
+        <Label FontSize="16" Padding="30,24,30,0">
+            <Label.FormattedText>
+                <FormattedString>
+                    <FormattedString.Spans>
+                        <Span Text="Find the most "/>
+                        <Span Text="optimum " FontAttributes="Bold"/>
+                        <Span Text="means to get horizontal tranlation only."/>
+                    </FormattedString.Spans>
+                </FormattedString>
+            </Label.FormattedText>
+        </Label>
+    </StackLayout>
+
+</ContentPage>
